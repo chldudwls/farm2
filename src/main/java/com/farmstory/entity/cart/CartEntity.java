@@ -21,6 +21,7 @@ public class CartEntity {
     private Long userIdx;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<CartItemEntity> carts;
 
 }

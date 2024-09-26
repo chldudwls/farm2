@@ -67,8 +67,6 @@
                         <a href="#" onclick="postCart(event)" class="btnCart">
                             장바구니 >
                         </a>
-
-
                     </table>
                 </div>
                 <h3>상품설명</h3>
@@ -118,12 +116,13 @@
 
         async function postCart(event){
             event.preventDefault();
+
             const submitData = {
                 "prodIdx" : document.querySelector('.prIdx').innerText,
                 "cartItemQuantity" : document.querySelector('.quant').value
             }
             try {
-                const resp = await axios.post("http://localhost:8080/api/client/cart", submitData, {
+                const resp = await axios.post("/api/client/cart", submitData, {
                     headers: {
                         "Content-Type": "application/json"
                     }

@@ -1,14 +1,21 @@
 package com.farmstory.controller.pagecontroller;
 
+import com.farmstory.responsedto.cart.GetCartItemsRespDto;
+import com.farmstory.service.cart.CartService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/mypage")
+@RequiredArgsConstructor
 public class MypageController {
+    private final CartService cartService;
 
     @GetMapping("/carts")
     public ModelAndView getCarts(
@@ -19,6 +26,11 @@ public class MypageController {
         mav.setViewName("pages/cart/cart_list");
         mav.addObject("section" ,section);
         mav.addObject("type", type);
+
+        List<GetCartItemsRespDto> getCartItemsRespDtoList = cartService.selectCarts();
+
+        mav.addObject("getCartItemsRespDtoList" , getCartItemsRespDtoList);
+
         return mav;
     }
 

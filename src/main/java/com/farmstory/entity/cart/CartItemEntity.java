@@ -1,5 +1,7 @@
 package com.farmstory.entity.cart;
 import com.farmstory.entity.product.ProductEntity;
+import com.farmstory.entity.product.ProductFileEntity;
+import com.farmstory.responsedto.cart.GetCartItemsRespDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,4 +28,30 @@ public class CartItemEntity {
     @ManyToOne
     @JoinColumn(name = "prod_idx")
     private ProductEntity prod;
+
+    public GetCartItemsRespDto toGetCartItemsRespDto() {
+//        ProductFileEntity prodFile = prod.getProductFiles().stream()
+//                .filter(v->v.getProdFileType().equals("list"))
+//                .findFirst()
+//                .orElse(null);
+//        String fileName;
+//
+//        if(prodFile.getProdFileName()==null){
+//            fileName = "empty.png";
+//        } else {
+//            fileName = prodFile.getProdFileName();
+//        }
+
+
+        return GetCartItemsRespDto.builder()
+                .cartItemIdx(cartItemIdx)
+                //.prodFileName(fileName)
+                .prodFilePath("/file/")
+                .prodType(prod.getProdType())
+                .prodName(prod.getProdName())
+                .cartItemQuantity(cartItemQuantity)
+                .prodDiscount(prod.getProdDiscount())
+                .prodPrice(prod.getProdPrice())
+                .build();
+    }
 }

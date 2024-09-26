@@ -30,6 +30,7 @@
                         <td>사진</td>
                         <td>종류</td>
                         <td>상품명</td>
+                        <td>재고</td>
                         <td>가격</td>
                     </tr>
                     <tr class="tr-content" th:each="product : ${products}">
@@ -38,6 +39,7 @@
                         </td>
                         <td th:text="${product.prodType}"></td>
                         <td><a th:text="${product.prodName}" href="#"></a></td>
+                        <td><a th:text="${product.prodStock}" href="#"></a></td>
                         <td><strong th:text="${product.prodPrice.intValue()}"></strong>원</td>
                     </tr>
                 </table>
@@ -78,6 +80,7 @@
                     <td>사진</td>
                     <td>종류</td>
                     <td>상품명</td>
+                    <td>재고</td>
                     <td>가격</td>
                 </tr>
                 `;
@@ -93,6 +96,7 @@
                         </td>
                         <td>${product.prodType}</td>
                         <td><a href="http://localhost:8080/client/product?productIdx=${product.prodIdx}">${product.prodName}</a></td>
+                        <td><a href="#">${product.prodStock}</a></td>
                         <td><strong>${product.prodPrice}</strong>원</td>
                     </tr>
                     `;

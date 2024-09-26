@@ -16,7 +16,7 @@ public class OrderController {
             @RequestParam int quantity
             ){
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("/pages/order/order_direct");
+        mav.setViewName("pages/order/order_direct");
         mav.addObject("prodIdx", prodIdx);
         mav.addObject("quantity", quantity);
         mav.addObject("section","product");

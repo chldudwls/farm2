@@ -51,8 +51,6 @@ public class ApiAdminController {
         return ResponseEntity.ok(path);
     }
 
-
-
     @PostMapping("/product")
     public ResponseEntity<String> postProduct(
             @RequestParam("product") String productJson,
