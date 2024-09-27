@@ -2,9 +2,11 @@ package com.farmstory.requestdto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class TestRequestDto {
     private int prodIdx;
     private int quantity;
@@ -16,4 +18,5 @@ public class TestRequestDto {
     private String addr;
     private String user_name;
     private String user_email;
+    private int cartItemQuantity;
 }
