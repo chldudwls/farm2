@@ -1,0 +1,205 @@
+CREATE DATABASE springfarmstory;
+
+USE springfarmstory;
+
+CREATE TABLE user (
+   user_idx BIGINT AUTO_INCREMENT PRIMARY KEY,
+   user_id VARCHAR(20) UNIQUE NOT NULL,
+   user_pwd VARCHAR(255) NOT NULL,
+   user_name VARCHAR(10) NOT NULL,
+   user_nick VARCHAR(20) UNIQUE NOT NULL,
+   user_email VARCHAR(40) UNIQUE NOT NULL,
+   user_hp CHAR(13) NOT NULL,
+   user_create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   user_role VARCHAR(10) NOT NULL DEFAULT 'user'  -- 수정된 부분
+);
+
+CREATE TABLE user_point (
+	point_idx BIGINT AUTO_INCREMENT PRIMARY KEY,
+	user_idx BIGINT NOT NULL UNIQUE,
+	user_point DECIMAL(10,2) NOT NULL,
+	
+	FOREIGN KEY (user_idx) REFERENCES user (user_idx)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
+);
+
+CREATE TABLE user_point_detail (
+	point_detail_idx BIGINT PRIMARY KEY AUTO_INCREMENT,
+	point_idx BIGINT NOT NULL,
+	save_point DECIMAL(10,2) ,
+	use_point DECIMAL(10,2) ,
+	detail VARCHAR(100) NOT NULL,
+	
+	FOREIGN KEY (point_idx) REFERENCES user_point (point_idx)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
+);
+
+CREATE TABLE user_address (
+	addr_idx BIGINT AUTO_INCREMENT PRIMARY KEY,
+   user_idx BIGINT NOT NULL,
+   addr_zone CHAR(5) NOT NULL,
+   addr VARCHAR(40) NOT NULL,
+   addr_detail VARCHAR(40) NOT NULL,
+   FOREIGN KEY (user_idx) REFERENCES user (user_idx)
+   ON DELETE CASCADE
+   ON UPDATE CASCADE
+);
+
+CREATE TABLE user_schedule (
+	schedule_idx BIGINT PRIMARY KEY AUTO_INCREMENT,
+	user_idx BIGINT NOT NULL,
+	`year` INT NOT NULL ,
+	`month` INT NOT NULL,
+	`date` INT NOT NULL ,
+	`color` VARCHAR(20) ,
+	`text` VARCHAR(20) ,
+	bgcolor VARCHAR(10) ,
+	
+	FOREIGN KEY (user_idx) REFERENCES user (user_idx)
+	ON DELETE CASCADE
+   ON UPDATE CASCADE
+);
+
+CREATE TABLE board(
+	board_idx BIGINT AUTO_INCREMENT PRIMARY KEY,
+	user_idx BIGINT NOT NULL,
+	board_title VARCHAR(50) NOT NULL,
+	board_content TEXT NOT NULL,
+	board_view_cnt INT DEFAULT 0,
+	board_section VARCHAR(20) NOT NULL,
+	board_type VARCHAR(20) NOT NULL,
+	board_create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	board_modify_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	
+	FOREIGN KEY (user_idx) REFERENCES user(user_idx)
+	ON DELETE CASCADE
+   ON UPDATE CASCADE
+);
+
+CREATE TABLE board_file (
+	board_file_idx BIGINT AUTO_INCREMENT PRIMARY KEY,
+	board_idx BIGINT NOT NULL,
+	filename VARCHAR(255) NOT NULL,
+	filepath VARCHAR(255) NOT NULL,
+	download_cnt INT ,
+	
+	FOREIGN KEY (board_idx) REFERENCES board(board_idx)
+	ON DELETE CASCADE
+   ON UPDATE CASCADE
+);
+
+CREATE TABLE `COMMENT` (
+	comment_idx BIGINT AUTO_INCREMENT PRIMARY KEY,
+	user_idx BIGINT NOT NULL,
+	board_idx BIGINT NOT NULL,
+	comment_content TEXT NOT NULL,
+	comment_create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	comment_modify_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	
+	FOREIGN KEY (user_idx) REFERENCES user(user_idx)
+	ON DELETE CASCADE
+   ON UPDATE CASCADE,
+   FOREIGN KEY (board_idx) REFERENCES board(board_idx)
+  	ON DELETE CASCADE
+   ON UPDATE CASCADE
+);
+
+CREATE TABLE product (
+   prod_idx BIGINT PRIMARY KEY AUTO_INCREMENT,
+   prod_name VARCHAR(40) NOT NULL,
+   prod_type VARCHAR(20) NOT NULL,
+   prod_delivery DECIMAL(10, 2) NOT NULL,
+   prod_price DECIMAL(10, 2) NOT NULL,
+   prod_discount DECIMAL(5, 2) NOT NULL,
+   prod_save_point DECIMAL(10, 2) NOT NULL,
+   prod_stock INT NOT NULL,
+   prod_create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   prod_etc TEXT NOT NULL
+);
+
+CREATE TABLE product_snapshot (
+   snapshot_idx BIGINT PRIMARY KEY AUTO_INCREMENT,
+   snapshot_name VARCHAR(40) NOT NULL,
+   snapshot_type VARCHAR(20) NOT NULL,
+   snapshot_delivery DECIMAL(10, 2) NOT NULL,
+   snapshot_price DECIMAL(10, 2) NOT NULL,
+   snapshot_discount DECIMAL(5, 2) NOT NULL,
+   snapshot_save_point DECIMAL(10, 2) NOT NULL,
+   snapshot_stock INT NOT NULL,
+   snapshot_create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   snapshot_etc TEXT NOT NULL,
+   snapshot_file_name VARCHAR(255) NOT NULL,
+   snapshot_file_path VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE product_file (
+	prod_file_idx BIGINT PRIMARY KEY AUTO_INCREMENT,
+	prod_idx BIGINT NOT NULL,
+	prod_file_type VARCHAR(20) NOT NULL,
+	prod_file_name VARCHAR(255) NOT NULL,
+	prod_file_path VARCHAR(255) NOT NULL,
+	
+	FOREIGN KEY (prod_idx) REFERENCES product (prod_idx)
+	ON DELETE CASCADE
+   ON UPDATE CASCADE
+);
+
+CREATE TABLE cart (
+	cart_idx BIGINT AUTO_INCREMENT PRIMARY KEY,
+	user_idx BIGINT NOT NULL,
+	
+	FOREIGN KEY (user_idx) REFERENCES user (user_idx)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
+);
+
+CREATE TABLE cart_item (
+	cart_item_idx BIGINT AUTO_INCREMENT PRIMARY KEY,
+	cart_idx BIGINT NOT NULL,
+	prod_idx BIGINT NOT NULL,
+	cart_item_quantity INT NOT NULL,
+	
+	FOREIGN KEY (prod_idx) REFERENCES product (prod_idx)
+	ON DELETE CASCADE
+   ON UPDATE CASCADE,
+   FOREIGN KEY (cart_idx) REFERENCES cart (cart_idx)
+	ON DELETE CASCADE
+   ON UPDATE CASCADE
+);
+
+CREATE TABLE `order` (
+	order_idx BIGINT AUTO_INCREMENT PRIMARY KEY,
+	order_total_price DECIMAL(10,2) NOT NULL,
+	order_quantity INT NOT NULL,
+	user_idx BIGINT NOT NULL,
+	reciever_name VARCHAR(20) NOT NULL,
+	reciever_hp CHAR(13) NOT NULL,
+	reciever_addr VARCHAR(255) NOT NULL,
+	order_buying_type VARCHAR(10) NOT NULL,
+	order_save_point DECIMAL(6,2) NOT NULL,
+	order_etc TEXT ,
+	order_create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	
+	FOREIGN KEY (user_idx) REFERENCES user (user_idx)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
+);
+
+CREATE TABLE order_item (
+	order_item_idx BIGINT AUTO_INCREMENT PRIMARY KEY,
+	order_idx BIGINT NOT NULL,
+	prod_idx BIGINT NULL,
+	snapshot_idx BIGINT NULL,
+	order_item_quantity INT ,
+	
+	FOREIGN KEY (order_idx) REFERENCES `order`(order_idx)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+	FOREIGN KEY (prod_idx) REFERENCES product (prod_idx)
+	ON DELETE SET NULL
+	ON UPDATE CASCADE
+);
+
+

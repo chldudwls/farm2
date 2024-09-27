@@ -1,0 +1,431 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>게시판</title>
+    <link rel="stylesheet" th:href="@{/css/board_list.css}">
+</head>
+<body>
+    <div class="container">
+        <header th:replace="layout/header.html"></header>
+        <main>
+            <aside th:replace="layout/sidebar.html"></aside>
+            <div class="list">
+                <nav>
+                    <img id="dynamicImg" alt="장보기" />
+                    <p>
+                        HOME >
+                        <span id="dynamicText1"></span> >
+                        <em id="dynamicText2"></em>
+                    </p>
+                </nav>
+                <div><img class="header-gubun" th:src="@{/images/head_menu_line.png}"></div>
+                <div class="main-contents">
+                    <div class="main-header">
+                        <h1>글목록 </h1>
+                    </div>
+                    <form class="form">
+                        <input type="search" placeholder="제목 키워드, 글쓴이 검색">
+                        <input type="submit" value="검색">
+                    </form>
+                    <table>
+                        <tr>
+                            <th>번호</th>
+                            <th class="th2">제목</th>
+                            <th>글쓴이</th>
+                            <th class="th4">날짜</th>
+                            <th>조회</th>
+                        </tr>
+                        <tr onclick="getBoard()">
+                            <td>1</td>
+                            <td>테스트 제목입니다.[3]</td>
+                            <td>길동이</td>
+                            <td>20-5-12</td>
+                            <td>12</td>
+                        </tr>
+                        <tr onclick="getBoard()">
+                            <td>2</td>
+                            <td>테스트 제목입니다.[3]</td>
+                            <td>길동이</td>
+                            <td>20-5-12</td>
+                            <td>12</td>
+                        </tr>
+                    </table>
+                    <div class="main-footer">
+                        <div class="button">
+                            <input type="button" value="이전">
+                            <input type="button" value="1">
+                            <input type="button" value="2">
+                            <input type="button" value="3">
+                            <input type="button" value="다음">
+                        </div>
+                        <div class="write">
+                            <input onclick="showPostForm()" type="button" class="write-button" value="글쓰기">
+                        </div>
+                    </div>
+                </div>
+                <div class="main-contents2">
+                    <h1>글쓰기</h1>
+                    <div>
+                        <table>
+                            <tr>
+                                <th>제목</th>
+                                <td><input type="text" style="width: 100%; height: 30px;" placeholder="제목을 입력하세요.."></td>
+                            </tr>
+                            <tr>
+                                <th>내용</th>
+                                <td><textarea style="width: 100%; height: 200px;" placeholder="내용을 입력하세요.."></textarea></td>
+                            </tr>
+                            <tr>
+                                <th>파일</th>
+                                <td>
+                                    <label for="file-upload" class="file-upload-label" style="display: inline-block;">
+                                        <button type="button" onclick="document.getElementById('file-upload').click();">Choose File</button>
+                                        <input id="file-upload" type="file" style="display: none;" onchange="document.getElementById('file-name').textContent = this.files[0] ? this.files[0].name : 'No file chosen';">
+                                    </label>
+                                    <span id="file-name">No file chosen</span>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="button-group">
+                            <button type="button" onclick="cancelPost()" class="cancel">취소</button>
+                            <button type="button" onclick="postBoard()" class="submit">작성완료</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-contents3">
+                    <h1 style="margin-bottom: 0;">글보기</h1>
+                    <table>
+                        <tr>
+                            <th>제목</th>
+                            <td><input type="text" style="width: 100%; height: 30px; border: none;" value="제목입니다."></td>
+                        </tr>
+                        <tr>
+                            <th>파일</th>
+                            <td><span class="no-underline">2020년 상반기 매출자료.xls 7개 다운로드</span></td>
+                        </tr>
+                        <tr>
+                            <th>내용</th>
+                            <td><textarea style="width: 100%; height: 200px; border: none;"></textarea></td>
+                        </tr>
+                    </table>
+                    <div class="button-group">
+                        <button onclick="deleteBoard()" type="button" class="cancel" >삭제</button>
+                        <button onclick="putPost()" type="button" style="border: 1px solid #ddd; background-color: white;">수정</button>
+                        <button onclick="getComments()" type="button" style="border: 1px solid #ddd; background-color: white;">댓글</button>
+                        <button onclick="cancelPost()" type="button" style="border: 1px solid #ddd; background-color: white;">목록</button>
+                    </div>
+                    <div class="comment-section">
+                        <div class="comment-list">
+                            <h4>댓글목록</h4>
+                            <div class="comment-item" style="width: auto; ">
+                                <div>
+                                    <strong>길동이</strong> 20-05-20<br>
+                                    <p style="margin-left: 15px;">댓글 샘플입니다.</p>
+                                </div>
+                                <div class="comment-buttons">
+                                    <button onclick="deleteComment()" type="button" class="cancel">삭제</button>
+                                    <button onclick="putComment()" type="button">수정</button>
+                                </div>
+                            </div>
+                            <div class="comment-item_no-comments">등록된 댓글이 없습니다.</div>
+                        </div>
+
+                        <div class="comment-box">
+                            <h4>댓글쓰기</h4>
+                            <textarea style="width: 100%; height: 100px; border: none"></textarea>
+                            <div class="button-group">
+                                <button onclick="closeComments()" type="button" class="cancel">취소</button>
+                                <button onclick="postComment()" type="submit">작성완료</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-contents4">
+                    <h1 style="margin-bottom: 0;">글수정</h1>
+                    <form>
+                        <table>
+                            <tr>
+                                <th>제목</th>
+                                <td><input type="text" style="width: 100%; height: 30px; border: none;" placeholder="제목을 입력하세요."></td>
+                            </tr>
+                            <tr>
+                                <th class="vertical-center">내용</th> <!-- "내용"을 가로 및 세로로 모두 가운데 정렬 -->
+                                <td><textarea style="width: 100%; height: 200px; border: none;"></textarea></td> <!-- '내용을 입력하세요.' placeholder 제거 -->
+                            </tr>
+                            <tr>
+                                <th>파일</th>
+                                <td>
+                                    <div class="file-input-container">
+                                        <label for="file-upload2" class="file-input-label">Choose File</label>
+                                        <input id="file-upload2" type="file" onchange="document.getElementById('file-chosen').textContent = this.files[0] ? this.files[0].name : 'No file chosen';">
+                                        <span id="file-chosen2" class="file-chosen">No file chosen</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="button-group">
+                            <button onclick="getBoard()" type="button" class="cancel">취소</button>
+                            <button onclick="putBoard()" type="submit" class="submit">작성완료</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="layout/footer.html"></footer>
+    </div>
+
+    <script th:inline="javascript">
+        // Thymeleaf 변수를 JavaScript로 전달
+        var section = /*[[${section}]]*/ 'defaultSection';
+        var type = /*[[${type}]]*/ 'defaultType';
+
+        // 이미지와 텍스트를 설정하는 함수
+        function updateNav() {
+            var imgSrc = '';
+            var mainText = '';
+            var subText = '';
+
+            // 조건에 맞춰 이미지 경로와 텍스트 설정
+            if (section === 'croptalk') {
+                mainText = '농작물이야기';
+
+                if (type === 'story') {
+                    imgSrc = '../images/sub_nav_tit_cate3_tit1.png';
+                    subText = '농작물이야기';
+                } else if (type === 'grow') {
+                    imgSrc = '../images/sub_nav_tit_cate3_tit2.png';
+                    subText = '텃밭가꾸기';
+                } else if (type === 'school') {
+                    imgSrc = '../images/sub_nav_tit_cate3_tit3.png';
+                    subText = '귀농학교';
+                }
+            } else if(section === 'event'){
+                mainText = '이벤트';
+                imgSrc = '../images/sub_nav_tit_cate4_tit1.png'
+                subText = '이벤트';
+            } else if(section === 'community'){
+                mainText = '커뮤니티';
+                if(type === 'notice'){
+                    imgSrc = '../images/sub_nav_tit_cate5_tit1.png';
+                    subText = '공지사항';
+                } else if(type === 'menu'){
+                    imgSrc = '../images/sub_nav_tit_cate5_tit2.png';
+                    subText = '오늘의식단';
+                } else if(type === 'chef'){
+                    imgSrc = '../images/sub_nav_tit_cate5_tit3.png';
+                    subText = '나도요리사';
+                } else if(type === 'qna'){
+                    imgSrc = '../images/sub_nav_tit_cate5_tit4.png';
+                    subText = '1:1고객문의';
+                } else if(type === 'faq'){
+                    imgSrc = '../images/sub_nav_tit_cate5_tit5.png';
+                    subText = '자주묻는질문';
+                }
+            }
+
+
+            // 이미지와 텍스트를 설정
+            document.getElementById('dynamicImg').src = imgSrc;
+            document.getElementById('dynamicText1').textContent = mainText;
+            document.getElementById('dynamicText2').textContent = subText;
+        }
+
+        // 초기화
+        updateNav();
+    </script>
+    <script>
+        function showPostForm() {
+            document.querySelector('.main-contents').style.display = 'none';
+            document.querySelector('.main-contents2').style.display = 'block';
+            document.querySelector('.main-contents3').style.display = 'none';
+            document.querySelector('.main-contents4').style.display = 'none';
+        }
+
+        function cancelPost() {
+            document.querySelector('.main-contents').style.display = 'block';
+            document.querySelector('.main-contents2').style.display = 'none';
+            document.querySelector('.main-contents3').style.display = 'none';
+            document.querySelector('.main-contents4').style.display = 'none';
+        }
+
+        async function getBoard(){
+            document.querySelector('.main-contents').style.display = 'none';
+            document.querySelector('.main-contents2').style.display = 'none';
+            document.querySelector('.main-contents3').style.display = 'block';
+            document.querySelector('.main-contents4').style.display = 'none';
+
+            try {
+                const resp = await axios.get('/api/client/board',{
+                    headers : {
+                        "Content-Type": "application/json",
+                    },
+                    params : {
+                        "boardIdx" : 1
+                    }
+                })
+                console.log(resp.data.test1)
+                console.log(resp.data.test2)
+                console.log(resp.data)
+
+            } catch (e) {
+
+            }
+        }
+
+        function putPost(){
+            document.querySelector('.main-contents').style.display = 'none';
+            document.querySelector('.main-contents2').style.display = 'none';
+            document.querySelector('.main-contents3').style.display = 'none';
+            document.querySelector('.main-contents4').style.display = 'block';
+        }
+    </script>
+    <script>
+        async function postBoard(){
+            const TestData ={
+                "section" : section,
+                "type" : type
+            }
+            try {
+                const resp = await axios.post('/api/client/board',TestData,{
+                    headers : {
+                        "Content-Type": "application/json",
+                    }
+                });
+                // console.log(resp.data)
+                window.location.href = resp.data;
+            } catch (e) {
+
+            }
+        }
+
+        async function putBoard(){
+            const TestData2 = {
+                "section" : section,
+                "type" : type,
+                "boardIdx" : 2
+            }
+
+            try {
+                const resp = await axios.put('/api/client/board', TestData2,{
+                    headers : {
+                        "Content-Type": "application/json",
+                    }
+                })
+                window.location.href = resp.data;
+            } catch (e) {
+
+            }
+        }
+
+        async function deleteBoard(){
+            const TestData3 = {
+                "section" : section,
+                "type" : type,
+                "boardIdx" : 2
+            }
+
+            try {
+                const resp = await axios.delete('/api/client/board',{
+                    headers : {
+                        "Content-Type": "application/json",
+                    },
+                    params : TestData3
+                })
+                window.location.href = resp.data;
+            } catch (e) {
+
+            }
+        }
+    </script>
+    <script>
+        async function getComments(){
+            document.querySelector('.comment-section').style.display = 'block';
+
+            try {
+                const resp = await axios.get('http://localhost:8080/api/client/comments',{
+                    headers : {
+                        "Content-Type": "application/json",
+                    },
+                    params : {
+                        "boardIdx" : 1
+                    }
+                })
+                console.log(resp.data.test1)
+                console.log(resp.data.test2)
+                console.log(resp.data)
+
+            } catch (e) {
+
+            }
+        }
+
+        async function postComment(){
+            const TestData2 = {
+                "section" : section,
+                "type" : type,
+                "boardIdx" : 2
+            }
+
+            try {
+                const resp = await axios.post('http://localhost:8080/api/client/comment', TestData2,{
+                    headers : {
+                        "Content-Type": "application/json",
+                    }
+                })
+                // window.location.href = resp.data;
+                if(resp.status === 200){
+                    await getComments();
+                }
+
+            } catch (e) {
+
+            }
+        }
+
+        async function putComment(){
+            const TestData2 = {
+                "boardIdx" : 2
+            }
+
+            try {
+                const resp = await axios.put('http://localhost:8080/api/client/comment', TestData2,{
+                    headers : {
+                        "Content-Type": "application/json",
+                    }
+                })
+                if(resp.status === 200){
+                    await getComments();
+                }
+
+            } catch (e) {
+
+            }
+        }
+
+        async function deleteComment(){
+            const TestData3 = {
+                "boardIdx" : 2
+            }
+
+            try {
+                const resp = await axios.delete('http://localhost:8080/api/client/comment',{
+                    headers : {
+                        "Content-Type": "application/json",
+                    },
+                    params : TestData3
+                })
+                if(resp.status === 200){
+                    await getComments();
+                }
+            } catch (e) {
+
+            }
+        }
+
+        function closeComments(){
+            document.querySelector('.comment-section').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

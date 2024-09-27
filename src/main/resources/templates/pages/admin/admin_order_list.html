@@ -1,0 +1,88 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:fragment="script">
+    <script src="/js/axios.min.js"></script>
+</th:block>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/css/admin_order_list.css}">
+    <title>주문목록(관리자)</title>
+</head>
+<body>
+<div class="container">
+    <header th:replace="layout/ad_header.html"></header>
+    <main>
+        <aside th:replace="layout/ad_sidebar.html"></aside>
+        <div class="main-container">
+            <div id="section2_main">
+                <div id="section2_title">주문목록</div>
+                <div id="article_wrapper">
+                    <div id="article1">
+                        <table id="order_table">
+                            <tr>
+                                <th><input type="checkbox"></th>
+                                <th>주문번호</th>
+                                <th>상품명</th>
+                                <th>판매가격</th>
+                                <th>수량</th>
+                                <th>배송비</th>
+                                <th>합계</th>
+                                <th>주문자</th>
+                                <th>주문일</th>
+                                <th>확인</th>
+                            </tr>
+                            <tr>
+                                <td><input name="selectedProducts" type="checkbox" value="${order.order_idx}"></td>
+                                <td>${order.order_idx }</td>
+                                <td>${order.prod_name }</td>
+                                <td>${order.price }</td>
+                                <td>${order.quantity }</td>
+                                <td>${order.deliveryFee }</td>
+                                <td>${order.total_price }</td>
+                                <td>${order.uid }</td>
+                                <td>${order.order_rdate }</td>
+                                <td><a href="#">[상세확인]</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="prod_heading">
+                        <div onclick="deleteOrder()" id="prod_del">선택삭제</div>
+                    </div>
+                    <div id="list_num">
+                        <a href="/jboard/article/list.do?pg=${pageGroup.start-1}" class="prev">이전</a>
+                        <a href="/jboard/article/list.do?pg=${i}" class="num ${currentPage == i ? 'current':'off'}">${i}</a>
+                        <a href="/jboard/article/list.do?pg=${pageGroup.end+1}"	class="next">다음</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="layout/ad_footer.html"></footer>
+</div>
+
+<script src="/js/axios.min.js"></script>
+<script>
+    async function deleteOrder(){
+        try {
+            const resp = await axios.delete("http://localhost:8080/api/admin/order",{
+                params : {
+                    orderIdx : 1
+                },
+                headers : {
+                    "Content-Type" : "application/json"
+                }
+            })
+            console.log(resp.data)
+            window.location.href = resp.data;
+        } catch (e) {
+
+        }
+
+    }
+</script>
+</body>
+</html>

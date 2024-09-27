@@ -1,0 +1,141 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    gap: 20px;
+}
+
+.agree-box {
+    padding: 20px;
+    width: 100%;
+    max-width: 700px;
+    box-sizing: border-box;
+}
+
+.agree-box .text {
+    width: 100%;
+    height: 237px;
+    border: 1px solid black;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.agree-box .tb_create {
+    width: 100%;
+    margin-bottom: 0;
+    position: relative;
+}
+
+.agree-box .tb_create td {
+    border: 0;
+    position: relative;
+}
+
+.agree-box .tb_create input[type="checkbox"] {
+    position: absolute;
+    bottom: 15px;
+    right: 95px;
+}
+
+.agree-box #agree_privacy1 {
+    right: 95px;
+}
+
+.agree-box .tb_create label {
+    position: absolute;
+    bottom: 13px;
+    right: 5px; /* 체크박스와 겹치지 않도록 조정 */
+    cursor: pointer;
+}
+
+/*하단 버튼 부분*/
+.agree-box .button-container {
+    display: flex;
+    justify-content: right;
+}
+
+.agree-box .button-container input[type="button"] {
+    padding: 10px 20px;
+    border: 1px solid black;
+    background-color: white;
+    cursor: pointer;
+}
+
+
+
+.inp-box {
+    padding: 20px;
+    width: 100%;
+    max-width: 700px;
+    box-sizing: border-box;
+    display: none;
+}
+
+.inp-box .text {
+    width: 100%;
+    height: 237px;
+    border: 1px solid black;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.inp-box .tb_site {
+    width: 100%;
+    margin-bottom: 30px;
+    position: relative;
+    border: 1px solid black;
+}
+
+.inp-box .tb_info {
+    width: 100%;
+    margin-bottom: 30px;
+    position: relative;
+    border: 1px solid black;
+}
+
+.inp-box .input-group{
+    width: 200px;
+    height: 20px;
+    margin: 3px 3px;
+    position: relative;
+
+}
+
+.inp-box .tb_create input[type="checkbox"] {
+    position: absolute;
+    bottom: 15px;
+    right: 95px;
+}
+
+.inp-box #agree_privacy1 {
+    right: 95px;
+}
+
+.inp-box .tb_create label {
+    position: absolute;
+    bottom: 13px;
+    right: 5px; /* 체크박스와 겹치지 않도록 조정 */
+    cursor: pointer;
+}
+
+/*하단 버튼 부분*/
+.inp-box .button-container {
+    display: flex;
+    justify-content: right;
+}
+
+.inp-box .button-container input[type="button"] {
+    padding: 10px 20px;
+    border: 1px solid black;
+    background-color: white;
+    cursor: pointer;
+}
+
+.inp-box th {
+    width: 85px;
+}
