@@ -61,9 +61,9 @@
                             <td>합계</td>
                             <td th:text="${product.prodPrice.intValue()}+원" th:name="totalPrice" class="totalPrice"></td>
                         </tr>
-                        <a href="/client/order/direct?prodIdx=2&quantity=3" class="btnOrder">
+                        <button onclick="postOrderDirect()" class="btnOrder">
                             <img src="../images/market_btn_order.gif" alt="바로 구매하기"/>
-                        </a>
+                        </button>
                         <a href="#" onclick="postCart(event)" class="btnCart">
                             장바구니 >
                         </a>

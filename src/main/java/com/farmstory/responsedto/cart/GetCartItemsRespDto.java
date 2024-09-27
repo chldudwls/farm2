@@ -21,6 +21,5 @@ public class GetCartItemsRespDto {
     private BigDecimal prodDiscount;
     private BigDecimal prodPoint;
     private BigDecimal prodPrice;
-
-
+    private BigDecimal cartItemTotal;
 }

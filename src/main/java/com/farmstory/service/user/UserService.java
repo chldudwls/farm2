@@ -12,6 +12,7 @@ import com.farmstory.requestdto.user.DeleteUserRespDto;
 import com.farmstory.requestdto.user.PutUserReqDto;
 import com.farmstory.requestdto.user.SignupUserAddressDto;
 import com.farmstory.requestdto.user.SignupUserDto;
+import com.farmstory.responsedto.user.GetOrderUserDto;
 import com.farmstory.responsedto.user.GetUserAllInfoDto;
 import com.farmstory.responsedto.user.GetUsersRespDto;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +56,15 @@ public class UserService {
         Long userIdx =newUser.getUserIdx();
         UserAddressEntity userAddressEntity = address.toEntity(userIdx);
         userAddressRepository.save(userAddressEntity);
+    }
+
+    public GetOrderUserDto orderUser(){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName(); //
+        Optional<UserEntity> optUser = userRepository.findByUserId(username);
+
+        return optUser.get().toGetOrderUserDto();
     }
 
     public Page<GetUsersRespDto> selectUsers(int page) {

@@ -5,6 +5,8 @@ import com.farmstory.responsedto.cart.GetCartItemsRespDto;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "cart_item")
 @Getter
@@ -42,6 +44,7 @@ public class CartItemEntity {
 //            fileName = prodFile.getProdFileName();
 //        }
 
+        BigDecimal totalPrice = BigDecimal.valueOf(cartItemQuantity).multiply(prod.getProdPrice());
 
         return GetCartItemsRespDto.builder()
                 .cartItemIdx(cartItemIdx)
@@ -49,9 +52,11 @@ public class CartItemEntity {
                 .prodFilePath("/file/")
                 .prodType(prod.getProdType())
                 .prodName(prod.getProdName())
+                .prodPoint(prod.getProdSavePoint())
                 .cartItemQuantity(cartItemQuantity)
                 .prodDiscount(prod.getProdDiscount())
                 .prodPrice(prod.getProdPrice())
+                .cartItemTotal(totalPrice)
                 .build();
     }
 }

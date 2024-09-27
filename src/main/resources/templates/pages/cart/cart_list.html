@@ -8,6 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>장바구니</title>
     <link rel="stylesheet" th:href="@{/css/cart_list.css}">
+
+    <script th:inline="javascript">
+        var getCartItemsRespDtoList = /*[[${getCartItemsRespDtoList}]]*/ [];
+    </script>
 </head>
 <body>
     <div class="container">
@@ -63,7 +67,7 @@
                                 <td th:text="${cart.prodDiscount}">10%</td>
                                 <td th:text="${cart.prodPoint}">40p</td>
                                 <td th:text="${cart.prodPrice}">4,000</td>
-                                <td> <strong>3,600</strong>원</td>
+                                <td> <strong th:text="${cart.cartItemTotal}">3,600</strong>원</td>
                             </tr>
 
                         </table><!-- .tb1 -->
@@ -79,13 +83,13 @@
                                     <tr>
                                         <th>주문자</th>
                                         <td>
-                                            <input type="text" class="uid" placeholder="홍길동">
+                                            <input readonly type="text" class="uid" th:value="${order.orderName}">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>휴대폰</th>
                                         <td>
-                                            <input type="text" class="hp" placeholder="010-1234-1001">
+                                            <input readonly type="text" class="hp" th:value="${order.orderHp}">
                                         </td>
                                     </tr>
                                     <tr class="use cf">
@@ -133,32 +137,33 @@
 
                             <div class="order_final cf">
                                 <table class="tb2">
+
                                     <tr>
                                         <th colspan="2">전체합계</th>
                                     </tr>
                                     <tr>
                                         <td>상품수</td>
-                                        <td>1</td>
+                                        <td id="quantity">1</td>
                                     </tr>
                                     <tr>
                                         <td>상품금액</td>
-                                        <td>27,000</td>
+                                        <td id="totalPrice">27,000</td>
                                     </tr>
                                     <tr>
                                         <td>할인금액</td>
-                                        <td>5,0000원</td>
+                                        <td id="discount">5,0000원</td>
                                     </tr>
                                     <tr>
                                         <td>배송비</td>
-                                        <td>5,0000원</td>
+                                        <td id="delivery">5,0000원</td>
                                     </tr>
                                     <tr>
                                         <td>포인트</td>
-                                        <td>4,000원</td>
+                                        <td id="point">4,000원</td>
                                     </tr>
                                     <tr>
                                         <td>전체주문금액</td>
-                                        <td>22,000</td>
+                                        <td id="lastTotal">22,000</td>
                                     </tr>
                                 </table><!-- .tb2 -->
                                 <button class="btn_order" onclick="popUp()">주문하기</button>
@@ -171,6 +176,38 @@
         </main>
         <footer th:replace="layout/footer.html"></footer>
     </div>
+    <script>
+
+
+        let totalPrice = 0
+        let totalDiscount = 0
+        let deliveryFee = 0
+        let totalPoint = 0
+
+        console.log(getCartItemsRespDtoList.length)
+
+        for(let i=0; i<getCartItemsRespDtoList.length;i++){
+            totalPrice += getCartItemsRespDtoList[i].cartItemTotal
+            totalDiscount += getCartItemsRespDtoList[i].cartItemTotal * getCartItemsRespDtoList[i].prodDiscount/100
+            totalPoint += getCartItemsRespDtoList[i].prodPoint * getCartItemsRespDtoList[i].cartItemQuantity
+        }
+
+        let lastTotal = totalPrice - totalDiscount + deliveryFee
+
+        console.log(totalPrice)
+        console.log(totalDiscount)
+        console.log(deliveryFee)
+        console.log(totalPoint)
+        console.log(lastTotal)
+
+        document.getElementById('quantity').innerText = getCartItemsRespDtoList.length
+        document.getElementById('totalPrice').innerText = totalPrice
+        document.getElementById('discount').innerText = totalDiscount
+        document.getElementById('delivery').innerText = deliveryFee
+        document.getElementById('point').innerText = totalPoint
+        document.getElementById('lastTotal').innerText = lastTotal
+
+    </script>
     <script>
         async function deleteCart(){
             try {

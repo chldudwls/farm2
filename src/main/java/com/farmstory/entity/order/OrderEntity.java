@@ -1,6 +1,8 @@
 package com.farmstory.entity.order;
 import com.farmstory.entity.user.UserEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +11,8 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "`order`")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
 public class OrderEntity {
     @Id

@@ -35,7 +35,7 @@
                     </tr>
                     <tr>
                         <td>상품코드</td>
-                        <td th:text="${product.prodIdx}">12</td>
+                        <td id="prodIdx" th:text="${product.prodIdx}">12</td>
                     </tr>
                     <tr>
                         <td>배송비</td>
@@ -47,7 +47,7 @@
                     </tr>
                     <tr>
                         <td>구매수량</td>
-                        <td th:text="${quantity}+개" class="count">1개</td>
+                        <td id="quantity" th:text="${quantity}+개" class="count">1개</td>
                     </tr>
                     <tr>
                         <td>합계</td>
@@ -60,37 +60,37 @@
                 <table>
                     <tr>
                         <td>받는분</td>
-                        <td><input type="text" name="receiver"></td>
+                        <td><input id="recieverName" type="text" name="receiver"></td>
                     </tr>
                     <tr>
                         <td>휴대폰</td>
-                        <td><input type="text" name="hp"></td>
+                        <td><input id="recieverHp" type="text" name="hp"></td>
                     </tr>
                     <tr>
                         <td>배송주소</td>
                         <td>
-                            <input type="text" name="zip" readonly>
+                            <input id="addr1" type="text" name="zip">
                             <button id="btnZip">우편번호 검색</button>
-                            <input type="text" name="addr1" placeholder="기본주소 검색">
-                            <input type="text" name="addr2" placeholder="상세주소 입력">
+                            <input id="addr2" type="text" name="addr1" placeholder="기본주소 검색">
+                            <input id="addr3" type="text" name="addr2" placeholder="상세주소 입력">
                         </td>
                     </tr>
                     <tr>
                         <td>결제방법</td>
                         <td>
-                            <select>
+                            <select id="buyingType">
                                 <option value="">결제방법</option>
-                                <option>신용카드</option>
-                                <option>무통장입금</option>
-                                <option>체크카드</option>
-                                <option>휴대폰</option>
+                                <option value="신용카드">신용카드</option>
+                                <option value="무통장">무통장입금</option>
+                                <option value="체크카드">체크카드</option>
+                                <option value="휴대폰">휴대폰</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td>기타</td>
                         <td>
-                            <textarea name="etc"></textarea>
+                            <textarea id="etc" name="etc"></textarea>
                         </td>
                     </tr>
                 </table>
@@ -107,26 +107,32 @@
 </div>
 <script>
 
-
     async function submitData(event) {
         event.preventDefault();
+
+        const data = {
+            "prodIdx": document.getElementById('prodIdx').innerText, // 실제 제품 ID로 교체
+            "cartItemQuantity": document.getElementById('quantity').innerText.slice(0,-1), // 실제 수량으로 교체
+            "orderReciever": document.getElementById('recieverName').value,
+            "orderHp": document.getElementById('recieverHp').value,
+            "orderAddr": document.getElementById('addr1').value+"/"+document.getElementById('addr2').value+"/"+document.getElementById('addr3').value,
+            "buyingType": document.getElementById('buyingType').value,
+            "etc": document.getElementById('etc').value,
+        }
+        console.log(data)
         try {
-            const resp = await axios.post("/api/client/order/direct", {
-                // 요청 본문 데이터
-                prodIdx: "190", // 실제 제품 ID로 교체
-                quantity: "1",     // 실제 수량으로 교체
-            }, {
+            const resp = await axios.post("/api/client/order/direct",data,{
                 // 요청 헤더
                 headers: {
                     "Content-Type": "application/json"
                 }
-            });
+            })
 
             // 응답 데이터 처리
-            if (resp.status === 200) {
-                console.log(resp.data)
-                window.location.href = resp.data;
-            }
+            // if (resp.status === 200) {
+            //     console.log(resp.data)
+            //     window.location.href = resp.data;
+            // }
         } catch (error) {
             // 오류를 처리할 코드
             console.error('Error:', error);

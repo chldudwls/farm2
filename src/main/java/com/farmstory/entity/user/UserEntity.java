@@ -1,6 +1,7 @@
 package com.farmstory.entity.user;
 
 import com.farmstory.requestdto.TestUserRequestDto;
+import com.farmstory.responsedto.user.GetOrderUserDto;
 import com.farmstory.responsedto.user.GetUsersRespDto;
 import jakarta.persistence.*;
 import lombok.*;
@@ -68,6 +69,13 @@ public class UserEntity {
                 .userHp(userHp)
                 .userCreateAt(userCreateAt)
                 .userRole(userRole)
+                .build();
+    }
+
+    public GetOrderUserDto toGetOrderUserDto() {
+        return GetOrderUserDto.builder()
+                .orderName(userName)
+                .orderHp(userHp)
                 .build();
     }
 

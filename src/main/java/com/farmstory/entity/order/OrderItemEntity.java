@@ -2,6 +2,8 @@ package com.farmstory.entity.order;
 
 import com.farmstory.entity.cart.CartItemEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +11,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "order_item")
 @NoArgsConstructor
 @Getter
+@Builder
+@AllArgsConstructor
 public class OrderItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

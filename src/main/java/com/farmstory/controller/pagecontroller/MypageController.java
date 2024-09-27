@@ -1,7 +1,10 @@
 package com.farmstory.controller.pagecontroller;
 
 import com.farmstory.responsedto.cart.GetCartItemsRespDto;
+import com.farmstory.responsedto.user.GetOrderUserDto;
 import com.farmstory.service.cart.CartService;
+import com.farmstory.service.order.OrderService;
+import com.farmstory.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MypageController {
     private final CartService cartService;
+    private final UserService userService;
 
     @GetMapping("/carts")
     public ModelAndView getCarts(
@@ -30,7 +34,10 @@ public class MypageController {
         List<GetCartItemsRespDto> getCartItemsRespDtoList = cartService.selectCarts();
 
         mav.addObject("getCartItemsRespDtoList" , getCartItemsRespDtoList);
+        System.out.println(getCartItemsRespDtoList);
+        GetOrderUserDto getOrderUserDto = userService.orderUser();
 
+        mav.addObject("order", getOrderUserDto);
         return mav;
     }
 
