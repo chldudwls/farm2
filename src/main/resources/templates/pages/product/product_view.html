@@ -16,9 +16,9 @@
 </head>
 <body>
     <div class="container">
-        <header th:replace="/layout/header.html"></header>
+        <header th:replace="layout/header.html"></header>
         <main>
-            <aside th:replace="/layout/sidebar.html"></aside>
+            <aside th:replace="layout/sidebar.html"></aside>
             <div class="view">
                 <nav>
                     <img src="../images/sub_nav_tit_cate2_tit1.png" alt="장보기"/>
@@ -61,7 +61,7 @@
                             <td>합계</td>
                             <td th:text="${product.prodPrice.intValue()}+원" th:name="totalPrice" class="totalPrice"></td>
                         </tr>
-                        <a href="http://localhost:8080/client/order/direct?prodIdx=2&quantity=3" class="btnOrder">
+                        <a href="/client/order/direct?prodIdx=2&quantity=3" class="btnOrder">
                             <img src="../images/market_btn_order.gif" alt="바로 구매하기"/>
                         </a>
                         <a href="#" onclick="postCart(event)" class="btnCart">
@@ -109,7 +109,7 @@
             </div>
         </div>
     </main>
-    <footer th:replace="/layout/footer.html"></footer>
+    <footer th:replace="layout/footer.html"></footer>
 </div>
 
 <script>
@@ -131,7 +131,7 @@
             // 응답 데이터 처리
             if (resp.status === 200) {
                 console.log(resp.data)
-                window.location.href = "http://localhost:8080"+resp.data;
+                window.location.href = ""+resp.data;
             }
         } catch (error) {
             // 오류를 처리할 코드
@@ -151,15 +151,15 @@
 </script>
 <script>
 
-    let totalPrice = document.querySelector('.totalPrice');
-    const prodPrice = document.querySelector('.prodPrice');
-    const quant = document.querySelector('.quant')
-    console.log(prodPrice.innerText.substring(0,3))
-    quant.addEventListener('change',(e)=>{
-        let value = e.target.value;
-        let totPrice = prodPrice.innerText.substring(0,prodPrice.innerText.length-1)
-        totalPrice.innerText = value*totPrice+'원';
-    })
-</script>
+        let totalPrice = document.querySelector('.totalPrice');
+        const prodPrice = document.querySelector('.prodPrice');
+        const quant = document.querySelector('.quant')
+        console.log(prodPrice.innerText.substring(0,3))
+        quant.addEventListener('change',(e)=>{
+                let value = e.target.value;
+                let totPrice = prodPrice.innerText.substring(0,prodPrice.innerText.length-1)
+                totalPrice.innerText = value*totPrice+'원';
+            })
+    </script>
 </body>
 </html>

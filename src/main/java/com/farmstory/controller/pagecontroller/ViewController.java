@@ -46,7 +46,7 @@ public class ViewController {
     @GetMapping("/find/id")
     public ModelAndView findId(){
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("/pages/auth/find_id");
+        mav.setViewName("pages/auth/find_id");
 
         return mav;
     }
@@ -54,7 +54,7 @@ public class ViewController {
     @GetMapping("/find/pwd")
     public ModelAndView findPwd(){
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("/pages/auth/find_pwd");
+        mav.setViewName("pages/auth/find_pwd");
 
         return mav;
     }

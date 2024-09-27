@@ -14,24 +14,24 @@
 <body>
 <!--th:if="${role==null}"-->
 <header>
-    <a href="http://localhost:8080/"class="logo"><img th:src="@{/images/logo.png}" alt="로고"/></a>
+    <a href="/" class="logo"><img th:src="@{/images/logo.png}" alt="로고"/></a>
     <p>
-        <a href="http://localhost:8080/">HOME |&nbsp;</a>
-        <a href="http://localhost:8080/mypage/carts?section=mypage&type=cart" sec:authorize="isAuthenticated()">마이페이지 |&nbsp;</a>
-        <a href="http://localhost:8080/view/login" sec:authorize="!isAuthenticated()">로그인 |&nbsp;</a>
+        <a href="/">HOME |&nbsp;</a>
+        <a href="/mypage/carts?section=mypage&type=cart" sec:authorize="isAuthenticated()">마이페이지 |&nbsp;</a>
+        <a href="/view/login" sec:authorize="!isAuthenticated()">로그인 |&nbsp;</a>
         <a href="auth/user/logout" sec:authorize="isAuthenticated()">로그아웃 |&nbsp;</a>
-        <a href="http://localhost:8080/view/signup" sec:authorize="!isAuthenticated()">회원가입 |&nbsp;</a>
-        <a href="http://localhost:8080/admin/users/products/orders" sec:authorize="isAuthenticated()">관리자 |&nbsp;</a>
-        <a href="http://localhost:8080/client/boards?section=community&type=qna">고객센터</a>
+        <a href="/view/signup" sec:authorize="!isAuthenticated()">회원가입 |&nbsp;</a>
+        <a href="/admin/users/products/orders" sec:authorize="isAuthenticated()">관리자 |&nbsp;</a>
+        <a href="/client/boards?section=community&type=qna">고객센터</a>
     </p>
     <img th:src="@{/images/head_txt_img.png}" alt="3만원 이상 무료배송"/>
 
     <ul class="gnb">
-        <li><a th:classappend="${section=='intro' ? 'active' : ''}" href="http://localhost:8080/sidebar?section=intro&type=greeting">팜스토리소개</a></li>
-        <li><a th:classappend="${section=='product' ? 'active' : ''}" href="http://localhost:8080/client/products?section=product&type=all"><img th:src="@{/images/head_menu_badge.png}" alt="30%"/>장보기</a></li>
-        <li><a th:classappend="${section=='croptalk' ? 'active' : ''}" href="http://localhost:8080/client/boards?section=croptalk&type=story" class="croptalk">농작물이야기</a></li>
-        <li><a th:classappend="${section=='event' ? 'active' : ''}" href="http://localhost:8080/client/event?section=event&type=calendar" class="event">이벤트</a></li>
-        <li><a th:classappend="${section=='community' ? 'active' : ''}" href="http://localhost:8080/client/boards?section=community&type=notice" class="community">커뮤니티</a></li>
+        <li><a th:classappend="${section=='intro' ? 'active' : ''}" href="/sidebar?section=intro&type=greeting">팜스토리소개</a></li>
+        <li><a th:classappend="${section=='product' ? 'active' : ''}" href="/client/products?section=product&type=all"><img th:src="@{/images/head_menu_badge.png}" alt="30%"/>장보기</a></li>
+        <li><a th:classappend="${section=='croptalk' ? 'active' : ''}" href="/client/boards?section=croptalk&type=story" class="croptalk">농작물이야기</a></li>
+        <li><a th:classappend="${section=='event' ? 'active' : ''}" href="/client/event?section=event&type=calendar" class="event">이벤트</a></li>
+        <li><a th:classappend="${section=='community' ? 'active' : ''}" href="/client/boards?section=community&type=notice" class="community">커뮤니티</a></li>
     </ul>
     <div id="header-img"></div>
 </header>

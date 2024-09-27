@@ -263,7 +263,7 @@
         console.log(submitData)
 
         try {
-            const resp = await axios.post("http://localhost:8080/api/event/schedule",submitData,{
+            const resp = await axios.post("/api/event/schedule",submitData,{
                 headers : {
                     "Content-Type" : "application/json"
                 }

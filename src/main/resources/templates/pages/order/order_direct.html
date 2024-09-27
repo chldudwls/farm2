@@ -111,7 +111,7 @@
     async function submitData(event) {
         event.preventDefault();
         try {
-            const resp = await axios.post("http://localhost:8080/api/client/order/direct", {
+            const resp = await axios.post("/api/client/order/direct", {
                 // 요청 본문 데이터
                 prodIdx: "190", // 실제 제품 ID로 교체
                 quantity: "1",     // 실제 수량으로 교체

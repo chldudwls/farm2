@@ -110,7 +110,7 @@
 <script>
     async function deleteUser(){
         try {
-            const resp = await axios.delete("http://localhost:8080/api/client/user",{
+            const resp = await axios.delete("/api/client/user",{
                 params : {
                     userIdx : 2
                 },

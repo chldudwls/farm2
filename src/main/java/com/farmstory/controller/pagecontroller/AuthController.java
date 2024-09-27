@@ -22,7 +22,7 @@ public class AuthController {
             ){
         ModelAndView mav = new ModelAndView();
         userService.insertUser(user,address);
-        mav.setViewName("/pages/auth/login");
+        mav.setViewName("pages/auth/login");
         return mav;
     }
 }

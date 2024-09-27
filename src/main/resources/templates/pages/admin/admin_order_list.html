@@ -68,7 +68,7 @@
 <script>
     async function deleteOrder(){
         try {
-            const resp = await axios.delete("http://localhost:8080/api/admin/order",{
+            const resp = await axios.delete("/api/admin/order",{
                 params : {
                     orderIdx : 1
                 },

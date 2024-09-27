@@ -95,7 +95,7 @@
             console.log(submitData)
 
             try {
-                const resp = await axios.delete('http://localhost:8080/api/admin/product',{
+                const resp = await axios.delete('/api/admin/product',{
                     headers : {
                         "Content-Type" : "application/json"
                     },

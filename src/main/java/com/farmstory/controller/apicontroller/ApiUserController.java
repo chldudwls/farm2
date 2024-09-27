@@ -14,7 +14,7 @@ public class ApiUserController {
     public ResponseEntity<String> deleteUser(
             Long userIdx
     ) {
-        String path = "http://localhost:8080/";
+        String path = "/";
         return ResponseEntity.ok().body(path);
     }
 }

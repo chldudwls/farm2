@@ -25,11 +25,11 @@
             <div>
                 <li id="prod_list">L
                 <a th:classappend="${section == 'product'}? 'active' : ''"
-                   href="http://localhost:8080/admin/products">상품목록</a>
+                   href="/admin/products">상품목록</a>
                 </li>
                 <li id="prod_register">L
                 <a th:classappend="${section == 'postproduct'}? 'active' : ''"
-                   href="http://localhost:8080/admin/view/product">상품등록</a>
+                   href="/admin/view/product">상품등록</a>
                 </li>
             </div>
         </ul>
@@ -37,14 +37,14 @@
             주문관리
             <li id="order_list">L
             <a th:classappend="${section == 'order'}? 'active' : ''"
-               href="http://localhost:8080/admin/orders">주문목록</a>
+               href="/admin/orders">주문목록</a>
             </li>
         </ul>
         <ul id="user_manage">
             회원관리
             <li id="user_list">L
             <a th:classappend="${section == 'user'}? 'active' : ''"
-               href="http://localhost:8080/admin/users">회원목록</a>
+               href="/admin/users">회원목록</a>
             </li>
         </ul>
     </div>

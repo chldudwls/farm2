@@ -77,12 +77,13 @@ public class ProductController {
 
     @GetMapping("/product")
     public ModelAndView getProduct(@RequestParam int productIdx) {
+        System.out.println("dddd");
         ModelAndView mav = new ModelAndView();
         mav.addObject("productIdx", productIdx);
         mav.addObject("section", "product");
         GetProductRespDto product = productService.selectProduct(productIdx);
 
-        mav.setViewName("/pages/product/product_view");
+        mav.setViewName("pages/product/product_view");
         mav.addObject("product",product);
         return mav;
     }

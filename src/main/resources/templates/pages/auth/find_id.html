@@ -79,7 +79,7 @@
             "user_email" : "ddd@gmail.com"
         }
         try {
-            const resp = await axios.post("http://localhost:8080/api/auth/send-email",testData,{
+            const resp = await axios.post("/api/auth/send-email",testData,{
                 headers : {
                     "Content-Type" : "application/json"
                 }

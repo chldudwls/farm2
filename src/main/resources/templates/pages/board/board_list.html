@@ -343,7 +343,7 @@
             document.querySelector('.comment-section').style.display = 'block';
 
             try {
-                const resp = await axios.get('http://localhost:8080/api/client/comments',{
+                const resp = await axios.get('/api/client/comments',{
                     headers : {
                         "Content-Type": "application/json",
                     },
@@ -368,7 +368,7 @@
             }
 
             try {
-                const resp = await axios.post('http://localhost:8080/api/client/comment', TestData2,{
+                const resp = await axios.post('/api/client/comment', TestData2,{
                     headers : {
                         "Content-Type": "application/json",
                     }
@@ -389,7 +389,7 @@
             }
 
             try {
-                const resp = await axios.put('http://localhost:8080/api/client/comment', TestData2,{
+                const resp = await axios.put('/api/client/comment', TestData2,{
                     headers : {
                         "Content-Type": "application/json",
                     }
@@ -409,7 +409,7 @@
             }
 
             try {
-                const resp = await axios.delete('http://localhost:8080/api/client/comment',{
+                const resp = await axios.delete('/api/client/comment',{
                     headers : {
                         "Content-Type": "application/json",
                     },

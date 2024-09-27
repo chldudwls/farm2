@@ -174,7 +174,7 @@
     <script>
         async function deleteCart(){
             try {
-                const resp = await axios.delete('http://localhost:8080/api/client/cart',{
+                const resp = await axios.delete('/api/client/cart',{
                     params : {
                         cartIdx : 2
                     },
@@ -196,7 +196,7 @@
             }
 
             try {
-                const resp = await axios.post('http://localhost:8080/api/client/order',testData,{
+                const resp = await axios.post('/api/client/order',testData,{
                     headers : {
                         "Content-Type" : "application/json"
                     }

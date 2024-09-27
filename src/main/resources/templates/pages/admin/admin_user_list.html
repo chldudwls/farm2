@@ -146,7 +146,7 @@
 
     async function deleteUser(){
         try {
-            const resp = await axios.delete('http://localhost:8080/api/admin/user',{
+            const resp = await axios.delete('/api/admin/user',{
                 headers : {
                     "Content-Type" : "application/json"
                 },
@@ -168,7 +168,7 @@
     async function putUser(){
 
         try {
-            const resp = await axios.put("http://localhost:8080/api/admin/user",putData,{
+            const resp = await axios.put("/api/admin/user",putData,{
                 headers : {
                     "Content-Type" : "application/json"
                 }
@@ -189,7 +189,7 @@
         const userIdx = selectedElement.id;
 
         try {
-            const resp = await axios.get("http://localhost:8080/api/admin/user",{
+            const resp = await axios.get("/api/admin/user",{
                 params : {
                     "userIdx" : userIdx
                 },

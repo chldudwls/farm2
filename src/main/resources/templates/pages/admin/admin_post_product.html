@@ -139,7 +139,7 @@
 
 
             try {
-                const resp = await axios.post("http://localhost:8080/api/admin/product",formData,{
+                const resp = await axios.post("/api/admin/product",formData,{
                     headers : {
                         "Content-Type" : "multipart/form-data"
                     }
