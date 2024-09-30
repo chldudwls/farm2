@@ -9,7 +9,7 @@ body {
     border: 1px solid #BEBEBE;
     margin: 0 auto;
     width: 372px;
-    height: 240px;
+    height: auto;
     margin-top: 100px;
     margin-bottom: 100px;
 }
@@ -102,3 +102,35 @@ body {
 .selction-info a {
     color: #007BFF;
 }
+
+.social-flex {
+    display: flex;
+    flex-direction: row; /* 가로 방향으로 배치 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+}
+
+.h1 {
+    font-size: 15px; /* 제목 크기 */
+    margin-bottom: 5px; /* 제목과 버튼 사이 여백 */
+    text-align: center; /* 제목 중앙 정렬 */
+    color: #333; /* 제목 색상 */
+    margin-right: 60px; /* 제목과 버튼 사이 여백 (예: 15px로 증가) */
+}
+
+.social-login {
+    display: inline-block;
+
+    transition: transform 0.2s; /* 버튼에 호버 효과 추가 */
+}
+
+.social-login img {
+    width: 20px; /* 아이콘 크기 */
+    height: auto; /* 비율 유지 */
+}
+
+.social-login:hover {
+    transform: scale(1.1); /* 호버 시 크기 증가 */
+}
+
+

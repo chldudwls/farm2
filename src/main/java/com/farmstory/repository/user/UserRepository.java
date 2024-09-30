@@ -15,9 +15,15 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<UserEntity,Long> {
 
     public Optional<UserEntity> findByUserId(String userId);
-    public Page<UserEntity> findAll(Pageable pageable);
+    public Optional<UserEntity> findByUserEmail(String userEmail);
+    public Optional<UserEntity> findByUserNick(String userNick);
+    public Optional<UserEntity> findByUserNameAndUserEmail(String userName, String userEmail);
+    public Optional<UserEntity> findByUserIdAndUserEmail(String userId, String userEmail);
+
+//    public Page<UserEntity> findAll(Pageable pageable);
 
     @Modifying
     @Query("UPDATE UserEntity u SET u.userRole = :userRole WHERE u.userIdx = :userIdx")
     int updateUserRole(@Param("userRole") String userRole, @Param("userIdx") Long userIdx);
+
 }

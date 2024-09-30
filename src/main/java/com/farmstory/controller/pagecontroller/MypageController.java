@@ -30,14 +30,6 @@ public class MypageController {
         mav.setViewName("pages/cart/cart_list");
         mav.addObject("section" ,section);
         mav.addObject("type", type);
-
-        List<GetCartItemsRespDto> getCartItemsRespDtoList = cartService.selectCarts();
-
-        mav.addObject("getCartItemsRespDtoList" , getCartItemsRespDtoList);
-        System.out.println(getCartItemsRespDtoList);
-        GetOrderUserDto getOrderUserDto = userService.orderUser();
-
-        mav.addObject("order", getOrderUserDto);
         return mav;
     }
 

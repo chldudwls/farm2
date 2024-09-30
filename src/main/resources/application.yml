@@ -1,5 +1,8 @@
+# 파일 업로드 디렉토리
 file:
   upload-dir: /path/to/upload/directory
+
+# 로깅 설정
 logging:
   file:
     name: /logs/farmstory.log
@@ -15,20 +18,26 @@ logging:
         web: error
     root: info
 
+# 서버 설정
 server:
   port: 8080
   servlet:
     context-path: /
 
+# MyBatis 설정
 mybatis:
   mapper-locations: classpath:mappers/**/*.xml
+
+# 스프링 애플리케이션 설정
 spring:
   application:
     name: farmstory
+
+  # 데이터소스 설정
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: 1234
-    url: jdbc:mysql://localhost:3306/springfarmstory?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    password: "Qkqh4251@@"
+    url: jdbc:mysql://localhost:3306/springfarmstory
     username: root
     jpa:
       database: mysql
@@ -42,12 +51,15 @@ spring:
           format_sql: true
           use_sql_comments: true
       show-sql: true
+
+    # 파일 업로드 설정
     servlet:
       multipart:
         max-file-size: 10MB
         max-request-size: 10MB
+
+    # Thymeleaf 설정
     thymeleaf:
-      cache: false
       check-template-location: true
       dialect:
         springsecurity:
@@ -56,20 +68,39 @@ spring:
       mode: HTML
       prefix: classpath:/templates/
       suffix: .html
-    # Email
-    mail:
-      host: smtp.gmail.com
-      port: 587
-      username: {woo24465@gmail.com}
-      password: {mawj nxfq tiwx regc}
-      properties:
-        mail:
-          smtp:
-            auth: true
-            starttls:
-              enable: true
-              required: true
-            connectiontimeout: 5000
-            timeout: 5000
-            writetimeout: 5000
-      auth-code-expiration-millis: 1800000  # 30 * 60 * 1000 == 30?
+
+  # 이메일 설정
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dudwls4251@gmail.com
+    password: ower mdek ocab srjn  # 구글 앱 비밀번호
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          writetimeout: 5000
+
+  # 보안 설정
+  security:
+    oauth2:
+      client:
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://accounts.google.com/o/oauth2/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-name-attribute: name
+        registration:
+          google:
+            client-id: 1012473217009-08ihdc36jkj3n2p11uuenk3c53ddudd9.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: http://localhost:8080/login/oauth2/code/google
+            scope:
+              - email
+              - profile

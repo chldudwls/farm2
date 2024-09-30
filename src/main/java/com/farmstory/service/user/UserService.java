@@ -1,5 +1,6 @@
 package com.farmstory.service.user;
 
+import com.farmstory.config.SecurityConfig;
 import com.farmstory.entity.user.UserAddressEntity;
 import com.farmstory.entity.user.UserEntity;
 import com.farmstory.entity.user.UserPointEntity;
@@ -12,10 +13,10 @@ import com.farmstory.requestdto.user.DeleteUserRespDto;
 import com.farmstory.requestdto.user.PutUserReqDto;
 import com.farmstory.requestdto.user.SignupUserAddressDto;
 import com.farmstory.requestdto.user.SignupUserDto;
-import com.farmstory.responsedto.user.GetOrderUserDto;
 import com.farmstory.responsedto.user.GetUserAllInfoDto;
 import com.farmstory.responsedto.user.GetUsersRespDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +31,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -38,6 +40,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserScheduleRepository userScheduleRepository;
     private final UserPointRepository userPointRepository;
+    private final EmailService emailService;
+    private final SecurityConfig securityConfig;
 
     public String deleteUser(DeleteUserRespDto request) {
         request.getUserIdx().forEach(v->{
@@ -56,15 +60,6 @@ public class UserService {
         Long userIdx =newUser.getUserIdx();
         UserAddressEntity userAddressEntity = address.toEntity(userIdx);
         userAddressRepository.save(userAddressEntity);
-    }
-
-    public GetOrderUserDto orderUser(){
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName(); //
-        Optional<UserEntity> optUser = userRepository.findByUserId(username);
-
-        return optUser.get().toGetOrderUserDto();
     }
 
     public Page<GetUsersRespDto> selectUsers(int page) {
@@ -101,4 +96,67 @@ public class UserService {
 
         return user;
     }
+
+    public String checkId(String userId) {
+        Optional<UserEntity> optUser = userRepository.findByUserId(userId);
+
+        if(optUser.isPresent()) {
+            return "DBI";
+        }
+        return "SU";
+    }
+    public String checkNick(String userNick) {
+        Optional<UserEntity> optNick = userRepository.findByUserNick(userNick);
+        if(optNick.isPresent()) {
+            return "DBN";
+        }
+        return "SU";
+    }
+    public String sendEmail(String userEmail) {
+        Optional<UserEntity> optUser = userRepository.findByUserEmail(userEmail);
+        if(optUser.isPresent()) {
+            return "SU";
+        }
+
+        String code = emailService.randomCode();
+        emailService.sendEmail(userEmail,"회원가입 인증 이메일발송", code);
+        return code;
+    }
+    public String findIdEmail(String userName, String userEmail) {
+        Optional<UserEntity> optUser = userRepository.findByUserNameAndUserEmail(userName, userEmail);
+        if(optUser.isPresent()) {
+            String code = emailService.randomCode();
+            emailService.sendEmail(userEmail,"팜스토리 아이디 찾기 인증 코드입니다", code);
+            log.info(code);
+            return code;
+        }
+        return "false";
+    }
+    public String findPassEmail(String userId, String userEmail ) {
+        Optional<UserEntity> optUser = userRepository.findByUserIdAndUserEmail(userId, userEmail);
+        if(optUser.isPresent()) {
+            String code = emailService.randomCode();
+            emailService.sendEmail(userEmail,"팜스토리 비밀번호 변경 인증 코드입니다", code);
+            log.info(code);
+            return code;
+
+        }
+        return "false";
+    }
+
+    public String checkPwd(String pwd){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+
+        UserEntity userEntity = userRepository.findByUserId(userName)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        if(securityConfig.passwordEncoder().matches(pwd, userEntity.getUserPwd())){
+            return "SU";
+        }
+        return "FA";
+    }
+
+
+
 }

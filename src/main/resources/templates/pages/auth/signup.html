@@ -8,25 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" th:href="@{/css/signup.css}">
     <title>회원가입</title>
-
-    <script>
-
-        let pageVeiwer = 0;
-
-        function pageConvert(){
-
-            pageVeiwer = 1;
-
-            const agreeBox = document.querySelector('.agree-box')
-            const inpBox = document.querySelector('.inp-box')
-
-            agreeBox.style.display = "none";
-            inpBox.style.display = "block";
-
-        }
-
-    </script>
-
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
 <div class="container">
@@ -34,22 +16,23 @@
     <main>
         <section class="agree-box">
             <div>
-                <h2>사이트 이용약관</h2>
+                <h6  class="h2">사이트 이용약관</h6>
             </div>
             <table class="tb_create">
                 <tbody>
                 <tr>
                     <td>
-                        <!-- <input type="text" class="text"> -->
-                        <textarea
-                                style="
-                    box-sizing: border-box;
-                    resize: none;
-                    width: 100%;
-                    height: 237px;
-                    padding: 12px;
-                  "
-                        ></textarea>
+                        <textarea readonly
+                                  style="
+                                box-sizing: border-box;
+                                resize: none;
+                                width: 100%;
+                                height: 237px;
+                                padding: 12px;
+                              "
+                        >
+                            암튼 동의좀
+                        </textarea>
                         <input type="checkbox" id="agree_privacy1" />
                         <label for="agree_privacy1">동의합니다.</label>
                     </td>
@@ -57,21 +40,24 @@
                 </tbody>
             </table>
             <div>
-                <h2>개인정보취급방침</h2>
+                <h6 class="h2">개인정보취급방침</h6>
             </div>
             <table class="tb_create">
                 <tbody>
                 <tr>
                     <td>
-                <textarea
-                        style="
-                    box-sizing: border-box;
-                    resize: none;
-                    width: 100%;
-                    height: 237px;
-                    padding: 12px;
-                  "
-                ></textarea>
+                        <textarea readonly
+                                  style="
+                            box-sizing: border-box;
+                            resize: none;
+                            width: 100%;
+                            height: 237px;
+                            padding: 12px;
+                          "
+                        >
+                            1. 개인정보처리방침 동의좀
+
+                        </textarea>
                         <input type="checkbox" id="agree_privacy2" />
                         <label for="agree_privacy2">동의합니다.</label>
                     </td>
@@ -79,95 +65,468 @@
                 </tbody>
             </table>
             <div class="button-container">
-                <input type="button" value="취소" />
-                <input type="button" value="다음" onclick="pageConvert()"/>
+                <input onclick="pageFunction()" type="button" value="취소" />
+                <input id="next-btn" onclick="nextFunction()" type="button" disabled value="다음" />
             </div>
         </section>
         <section class="inp-box">
-            <form th:action="@{/auth/user/signup}" th:object="${postUserRequestDto}" method="post">
-                <h2>회원정보 입력</h2>
-                <table class="tb_site">
-                    <tr>
-                        <th>아이디</th>
-                        <td>
-                            <div>
-                                <input class="input-group" name="userId" type="text" placeholder="아이디 입력">
-                                <img src="../images/chk_id.gif" alt="중복확인">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>비밀번호</th>
-                        <td>
-                            <input class="input-group" name="userPwd" type="password" placeholder="비밀번호 입력">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>비밀번호 확인</th>
-                        <td>
-                            <input class="input-group" type="password" placeholder="비밀번호 확인">
-                        </td>
-                    </tr>
-                </table>
-
-                <h2>개인정보 입력</h2>
-                <table class="tb_info">
-                    <tr>
-                        <th>이름</th>
-                        <td>
-                            <input class="input-group" id="userName" type="text" placeholder="이름 입력">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>별명</th>
-                        <td style="display: flex;">
-                            <div style="display: none">
-                                <p class="text_nickname">공백없는 한글, 영문, 숫자 입력</p>
-                            </div>
-                            <div>
-                                <input class="input-group" name="userNick" type="text" placeholder="별명 입력">
-                                <img src="../images/chk_id.gif" alt="중복확인">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>이메일</th>
-                        <td>
-                            <div>
-                                <input class="input-group" name="userEmail" type="email" placeholder="이메일 입력">
-                                <img src="../images/chk_auth.png" alt="인증번호 받기">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>휴대폰</th>
-                        <td>
-                            <input class="input-group" name="userHp" type="text" placeholder="휴대폰 입력">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>주소</th>
-                        <td>
-                            <div>
-                                <input class="input-group" name="addrZone" type="text" placeholder="우편번호">
-                                <img src="../images/chk_post.gif" alt="우편번호 찾기">
-                            </div>
-                            <div class="address-fields">
-                                <input class="input-group" name="addr" type="text" placeholder="주소 검색"> <br>
-                                <input class="input-group" name="addrDetail" type="text" placeholder="상세주소 입력">
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-                <div>
-                    <input type="submit" value="회원가입">
-                    <input type="button" value="취소">
+            <form th:action="@{/auth/user/signup}" method="post">
+                <h2 class="h2">사이트 이용정보 입력</h2>
+                <div class="border-div">
+                    <table class="tb_site">
+                        <tr>
+                            <th>아이디</th>
+                            <td>
+                                <input class="inp1" id="userIdInput" name="userId" type="text" placeholder="아이디 입력">
+                                <img onclick="idCheck()" class="id-check" th:src="@{/images/chk_id.gif}" alt="중복확인">
+                                <div id="error-id">중복된 아이디 입니다.</div>
+                                <div id="success-id">사용가능한 아이디 입니다.</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>비밀번호</th>
+                            <td>
+                                <input id="checkPwd" class="inp1" name="userPwd" type="password" placeholder="비밀번호 입력">
+                                <div id="error-pwd"></div>
+                                <div id="success-pwd"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>비밀번호 확인</th>
+                            <td>
+                                <input id="checkConfirm" class="inp1" type="password" placeholder="비밀번호 확인">
+                                <div id="error-confirm"></div>
+                                <div id="success-confirm"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <h2 class="h2 h2top">개인정보 입력</h2>
+                <div class="border-div">
+                    <table class="tb_info">
+                        <tr>
+                            <th>이름</th>
+                            <td>
+                                <input id="userName" class="inp1" name="userName" type="text" placeholder="이름 입력">
+                                <div id="error-name"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>별명</th>
+                            <td >
+                                <div class="nick_div">
+                                    <input class="inp1" id="userNick" name="userNick" type="text" placeholder="별명 입력">
+                                    <img onclick="checkNick()" class="nick-check" th:src="@{/images/chk_id.gif}" alt="중복확인">
+                                    <div id="error-nick"></div>
+                                    <div id="success-nick"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>이메일</th>
+                            <td>
+                                <div>
+                                    <input class="inp1" id="userEmail" name="userEmail" type="email" placeholder="이메일 입력">
+                                    <img class="send-email" onclick="checkEmail()" th:src="@{/images/chk_auth.png}" alt="인증번호 받기">
+                                    <div id="error-email"></div>
+                                    <div id="success-email">
+                                        <input id="emailCode" class="inp1" type="password" placeholder="인증번호 입력">
+                                        <button id="verifyBtn" type="button" onclick="verifyCode()">인증하기</button>
+                                        <span id="timer">03:00</span>
+                                    </div>
+                                    <div id="error-verify"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>휴대폰</th>
+                            <td>
+                                <input id="userHp" class="inp1" name="userHp" type="text" placeholder="휴대폰 입력">
+                                <div id="error-hp"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>주소</th>
+                            <td>
+                                <input class="inp1 addr1" id="postcode" name="addrZone" type="text" placeholder="우편번호">
+                                <img class="find-addr" onclick="execDaumPostcode()" th:src="@{/images/chk_post.gif}" alt="우편번호 찾기">
+                                <input class="inp2 addr2" id="address" name="addr" type="text" placeholder="주소 검색">
+                                <input class="inp2 addr3" id="addrDetail" name="addrDetail" type="text" placeholder="상세주소 입력">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="inp-btn-box">
+                    <input onclick="prevFunction()" class="x-btn" type="button" value="취소">
+                    <input class="submit-btn" disabled type="submit" value="회원가입">
                 </div>
             </form>
         </section>
     </main>
     <footer th:replace="layout/footer.html"></footer>
 </div>
+<script>
+    // 버튼 상태를 업데이트하는 함수
+    function updateButtonState() {
+        const checkbox1 = document.getElementById('agree_privacy1');
+        const checkbox2 = document.getElementById('agree_privacy2');
+        const nextBtn = document.getElementById('next-btn');
 
+        if (checkbox1.checked && checkbox2.checked) {
+            nextBtn.disabled = false;  // 체크박스 두 개 모두 체크되었을 때 버튼 활성화
+        } else {
+            nextBtn.disabled = true;   // 하나라도 체크되지 않으면 버튼 비활성화
+        }
+    }
+
+    // 체크박스 상태가 변경될 때마다 버튼 상태를 업데이트하도록 이벤트 리스너 추가
+    document.getElementById('agree_privacy1').addEventListener('change', updateButtonState);
+    document.getElementById('agree_privacy2').addEventListener('change', updateButtonState);
+</script>
+<script>
+    function nextFunction(){
+        document.querySelector('.inp-box').style.display = "block"
+        document.querySelector('.agree-box').style.display = 'none'
+    }
+
+    function prevFunction(){
+        document.querySelector('.inp-box').style.display = "none"
+        document.querySelector('.agree-box').style.display = 'block'
+    }
+
+    function pageFunction(){
+        window.location.href = "/view/login"
+    }
+
+    document.getElementById('userIdInput').addEventListener('input',()=>{
+        document.getElementById('error-id').style.display = "none"
+        document.getElementById('success-id').style.display = "none"
+    })
+    document.getElementById('userNick').addEventListener('input',()=>{
+        document.getElementById('error-nick').style.display = "none"
+        document.getElementById('success-nick').style.display = "none"
+    })
+    document.getElementById('userEmail').addEventListener('input',()=>{
+        document.getElementById('error-email').style.display = "none"
+        document.getElementById('success-email').style.display = "none"
+    })
+    document.getElementById('emailCode').addEventListener('input',()=>{
+        document.getElementById('error-verify').style.display = "none"
+        document.getElementById('error-verify').style.display = "none"
+    })
+    document.getElementById('userName').addEventListener('input',()=>{
+        document.getElementById('error-name').style.display = "none"
+        document.getElementById('error-name').style.display = "none"
+    })
+    document.getElementById('userHp').addEventListener('input',()=>{
+        document.getElementById('error-hp').style.display = "none"
+        document.getElementById('error-hp').style.display = "none"
+    })
+</script>
+<script>
+    let idValue = false;
+    let pwdValue = false;
+    let confirmValue = false;
+    let nameValue = false;
+    let nickValue = false;
+    let emailValue = false;
+    let verifyValue = false;
+    let hpValue = false;
+    let addressValue = false;
+    async function idCheck(){
+        const sumbitId = {
+            "userId" : document.getElementById('userIdInput').value
+        }
+        console.log(sumbitId)
+        try {
+            const resp = await axios.get("/api/auth/check/id",{
+                params : {
+                    "userId" : document.getElementById('userIdInput').value
+                },
+                headers : {
+                    "Content-Type" : "application/json"
+                }
+            })
+            if(resp.data==="DBI"){
+                document.getElementById('error-id').textContent = '이미 사용 중인 아이디입니다.';
+
+                document.getElementById('error-id').style.display = "block"
+                idValue = false;
+            } else if (resp.data === "SU"){
+                document.getElementById('success-id').textContent = '사용 가능한 아이디입니다.';
+                document.getElementById('success-id').style.display = "block"
+                idValue = true;
+            } else if(resp.data === "EUI"){
+                document.getElementById('error-id').textContent = '공백은 허용되지 않습니다.'
+                document.getElementById('error-id').style.display = "block"
+                idValue = false;
+            } else if(resp.data === "EW"){
+                document.getElementById('error-id').textContent = '사이의 공백은 허용되지 않습니다.'
+                document.getElementById('error-id').style.display = "block"
+                idValue = false;
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const password = document.getElementById('checkPwd')
+    password.addEventListener('input',()=>{
+        const password = document.getElementById('checkPwd').value;
+        const errorMsg = document.getElementById('error-pwd');
+        const successMsg = document.getElementById('success-pwd')
+
+        const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+        if (!passwordPattern.test(password)) {
+            errorMsg.textContent = "비밀번호는 8자리 이상, 영어, 숫자, 특수문자(@$!%*?&)를 포함해야 합니다.";
+            errorMsg.style.display = 'block';
+            successMsg.style.display = 'none';
+            pwdValue = false;
+            return false;
+        } else {
+            successMsg.textContent = "사용가능한 비밀번호 입니다."
+            successMsg.style.display = 'block'
+            errorMsg.style.display = 'none';
+            pwdValue = true;
+        }
+
+
+    })
+
+    const confirm = document.getElementById('checkConfirm')
+    confirm.addEventListener('input',()=>{
+        const password = document.getElementById('checkPwd').value;
+        const confirmPassword = document.getElementById('checkConfirm').value;
+        const errorMsg = document.getElementById('error-confirm');
+        const successMsg = document.getElementById('success-confirm')
+        if (password !== confirmPassword) {
+            errorMsg.textContent = "비밀번호와 비밀번호 확인이 일치하지 않습니다.";
+            errorMsg.style.display = 'block';
+            successMsg.style.display = 'none';
+            confirmValue = false;
+            return false;
+        } else {
+            successMsg.textContent = "비밀번호와 비밀번호 확인이 일치합니다."
+            successMsg.style.display = 'block'
+            errorMsg.style.display = 'none';
+            confirmValue = true;
+        }
+
+    })
+
+    document.getElementById('userName').addEventListener('input',()=>{
+
+        if(document.getElementById('userName').value.trim !== '' && !document.getElementById('userName').value.includes(' ')){
+            nameValue = true;
+        } else {
+            document.getElementById('error-name').textContent = '사이의 공백은 허용하지않습니다.'
+            document.getElementById('error-name').style.display = 'block'
+            nameValue = false;
+        }
+    })
+    document.getElementById('userHp').addEventListener('input',()=>{
+        if(document.getElementById('userHp').value.trim !== '' && !document.getElementById('userHp').value.includes(' ') ){
+            hpValue = true;
+        } else {
+            document.getElementById('error-hp').textContent = '사이의 공백은 허용하지않습니다.'
+            document.getElementById('error-hp').style.display = 'block'
+            hpValue = false;
+        }
+    })
+
+    async function checkNick(){
+        const userNick = document.getElementById('userNick').value;
+        const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/g;
+        if (specialCharPattern.test(userNick)) {
+            document.getElementById('error-nick').textContent = "별명에 특수문자를 포함할 수 없습니다.";
+            document.getElementById('error-nick').style.display = "block";
+            nickValue = false;
+            return;
+        }
+        try {
+            const resp = await axios.get("/api/auth/check/nick",{
+                params : {
+                    "userNick" : document.getElementById('userNick').value
+                },
+                headers : {
+                    "Content-Type" : "application/json"
+                }
+            })
+            console.log(resp.data)
+
+            if(resp.data==="DBI"){
+                document.getElementById('error-nick').textContent = '중복된 닉네임 입니다.'
+                document.getElementById('error-nick').style.display = "block"
+                nickValue = false;
+            } else if (resp.data === "SU"){
+                document.getElementById('success-nick').innerHTML = '사용가능한 닉네임 입니다.'
+                document.getElementById('success-nick').style.display = "block"
+                nickValue = true;
+            } else if(resp.data==="EUN"){
+                document.getElementById('error-nick').textContent = '공백은 허용되지 않습니다.'
+                document.getElementById('error-nick').style.display = "block"
+                nickValue = false;
+            } else if(resp.data === "EW"){
+                document.getElementById('error-nick').textContent = '사이의 공백은 허용되지 않습니다.'
+                document.getElementById('error-nick').style.display = "block"
+                nickValue = false;
+            }
+        } catch (e) {
+            console.log(err)
+        }
+    }
+
+    async function checkEmail(){
+        const email = document.getElementById('userEmail').value;
+        const emailPattern = /^(?=.{1,256}$)(?=.{1,64}@.{1,255}$)(?!.*\.\.)(?!.*\.$)(?!.*\.-)(?!.*-\.)(?!.*\..-)(?!.*\.-)(?!.*\.$)(?!.*\.@)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
+
+
+        // 이메일이 비어 있는지 확인
+        if (!email) {
+            document.getElementById('error-email').textContent = "이메일을 입력하세요.";
+            document.getElementById('error-email').style.display = "block";
+            emailValue = false;
+            return;
+        }
+
+        // 이메일 형식이 올바른지 확인
+        if (!emailPattern.test(email)) {
+            document.getElementById('error-email').textContent = "유효하지 않은 이메일 형식입니다.";
+            document.getElementById('error-email').style.display = "block";
+            emailValue = false;
+            return;
+        }
+
+        try {
+            const resp = await axios.get("/api/auth/send/email",{
+                params : {
+                    "userEmail" : email
+                },
+                headers : {
+                    "Content-Type" : "application/json"
+                }
+            })
+            if(resp.data.result==="DBE"){
+                document.getElementById('error-email').textContent = "중복된 이메일 입니다.";
+                document.getElementById('error-email').style.display = "block";
+                emailValue = false;
+            } else {
+                document.getElementById('success-email').style.display = "block";
+                handleEmailResponse(resp.data)
+                recieveCode = resp.data.result
+                startTimer(180 * 1000);
+                emailValue = true;
+            }
+        } catch (e) {
+
+        }
+    }
+    let expiryTime;
+    let timerInterval;
+
+    function startTimer(duration) {
+        const endTime = Date.now() + duration;
+        expiryTime = endTime;
+
+        function updateTimer() {
+            const now = Date.now();
+            const timeLeft = endTime - now;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                document.querySelector('#success-email button').disabled = true;
+                document.querySelector('#timer').textContent = '00:00';
+                return;
+            }
+
+            const minutes = Math.floor(timeLeft / 60000);
+            const seconds = Math.floor((timeLeft % 60000) / 1000);
+            document.querySelector('#timer').textContent =
+                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+            timerInterval = setTimeout(updateTimer, 1000); // 1초마다 업데이트
+        }
+
+        updateTimer();
+    }
+
+    function handleEmailResponse(response) {
+        const expiryTime = response.expiryTime;
+        const currentTime = Date.now();
+        const timeLeft = expiryTime - currentTime;
+
+        // 인증 코드 입력 DIV 표시
+        document.getElementById("success-email").style.display = 'block';
+
+        // 인증 버튼 비활성화 및 타이머 설정
+        const verifyButton = document.querySelector('#success-email button');
+        verifyButton.disabled = false;
+
+        // 타이머를 사용하여 버튼 비활성화
+        setTimeout(() => {
+            verifyButton.disabled = true;
+        }, timeLeft);
+    }
+
+    let recieveCode = 0;
+
+    function verifyCode(){
+        const sendCode = document.getElementById('emailCode').value
+        console.log(recieveCode)
+        if(recieveCode===sendCode){
+            document.getElementById('verifyBtn').innerText = '인증완료'
+            document.getElementById('verifyBtn').disabled = true;
+            document.getElementById('timer').style.display = 'none'
+            document.getElementById('userEmail').readOnly = true;
+            verifyValue = true;
+        } else {
+            document.getElementById('error-verify').textContent = '잘못된 인증코드 입니다.'
+            document.getElementById('error-verify').style.display = 'block'
+        }
+    }
+
+    const allInp = document.querySelectorAll('.inp-box input');
+    allInp.forEach(v=>{
+        v.addEventListener('input',()=>{
+            if(idValue&&pwdValue&&confirmValue&&nameValue&&nickValue&&emailValue&&verifyValue&&hpValue&&addressValue){
+                document.querySelector('.submit-btn').disabled = false;
+            } else {
+                document.querySelector('.submit-btn').disabled = true;
+            }
+        })
+    })
+
+</script>
+<script>
+    function execDaumPostcode() {
+        event.preventDefault();
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 우편번호와 주소 정보를 해당 입력 필드에 채워줍니다.
+                document.getElementById('postcode').value = data.zonecode; // 우편번호
+                document.getElementById('address').value = data.roadAddress; // 도로명 주소
+
+                // 사용자가 선택한 주소에 추가 정보가 있다면 추가
+                var extraAddr = '';
+                if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                    extraAddr += data.bname;
+                }
+                if (data.buildingName !== '' && data.apartment === 'Y') {
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                if (extraAddr !== '') {
+                    document.getElementById('address').value += ' (' + extraAddr + ')';
+                }
+
+                // 우편번호 찾기 화면이 닫힙니다.
+                addressValue=true
+                document.getElementById('postcode').readOnly = true;
+                document.getElementById('address').readOnly = true;
+                document.getElementById('postcode').focus();
+            }
+        }).open();
+    }
+</script>
 </body>
 </html>
